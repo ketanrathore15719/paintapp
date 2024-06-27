@@ -177,10 +177,10 @@ router.get('/:id/pdf', async (req, res) => {
 
     doc.end();
   
-    // var fileStream = fs.createReadStream(filePath);
-    //   fileStream.pipe(res);
+    var fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res);
     // console.log("okokkooookok")
-    res.download(filePath)
+    // res.download(filePath)
     
     // doc.on('finish', () => {
     //   console.log("done")
