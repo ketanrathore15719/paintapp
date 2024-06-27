@@ -1,0 +1,8 @@
+<h2>Invoices</h2>
+<ul class="list-group">
+  {{#each invoices}}
+    <li class="list-group-item">
+      <a href="/invoice/{{this._id}}">Invoice {{this._id}}</a> - {{this.customerName}} - ${{this.totalWithGst}}
+    </li>
+  {{/each}}
+</ul>

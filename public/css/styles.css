@@ -1,0 +1,14 @@
+/* public/css/styles.css */
+
+body {
+    padding-top: 56px;
+}
+
+.jumbotron {
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+  

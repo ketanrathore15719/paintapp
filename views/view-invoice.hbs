@@ -1,0 +1,19 @@
+<h2>Invoice {{invoice._id}}</h2>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Customer Details</h5>
+    <p class="card-text">Name: {{invoice.customerName}}</p>
+    <p class="card-text">Email: {{invoice.customerEmail}}</p>
+    <p class="card-text">Address: {{invoice.customerAddress}}</p>
+    <h5 class="card-title">Products</h5>
+    <ul class="list-group list-group-flush">
+      {{#each invoice.products}}
+        <li class="list-group-item">{{this.productId.name}} - Quantity: {{this.quantity}} - Price: ${{this.price}}</li>
+      {{/each}}
+    </ul>
+    <p class="card-text mt-3">GST Percentage: {{invoice.gstPercentage}}%</p>
+    <p class="card-text">Total: ${{invoice.total}}</p>
+    <p class="card-text">Total with GST: ${{invoice.totalWithGst}}</p>
+    <a href="/invoice/{{invoice._id}}/pdf" class="btn btn-primary" target="_blank">Download PDF</a>
+  </div>
+</div>
