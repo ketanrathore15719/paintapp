@@ -13,6 +13,11 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+const hbs = require('hbs');
+
+hbs.registerHelper('incrementedIndex', function(index) {
+  return index + 1;
+});
 
 // Routes
 const indexRouter = require('./routes/index');
@@ -25,7 +30,7 @@ app.use('/products', productsRouter);
 app.use('/stock', stockRouter);
 app.use('/invoice', invoiceRouter);
 
-const PORT = process.env.PORT || 3007;
+const PORT = process.env.PORT || 3008;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

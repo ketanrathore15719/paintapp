@@ -1,0 +1,69 @@
+<div class="main-panel">        
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Customer Invoice</h4>
+                  <form class="add-product-form" action="/invoice/create" method="POST" >
+                    <div class="form-group row">
+                        <label for="customerName" class="col-sm-3 col-form-label">Customer Name</label>
+                        <div class="col-sm-9">
+                            <input required type="text" class="form-control" id="customerName" name="customerName"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="customerEmail" class="col-sm-3 col-form-label">Cutomer Email</label>
+                        <div class="col-sm-9">
+                            <input required type="text" class="form-control" id="customerEmail" name="customerEmail"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="customerAddress" class="col-sm-3 col-form-label">Customer Address</label>
+                        <div class="col-sm-9">
+                            <input required type="text" class="form-control" id="customerAddress" name="customerAddress"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="customerPhone" class="col-sm-3 col-form-label">Customer Phone</label>
+                        <div class="col-sm-9">
+                            <input required type="text" class="form-control" id="customerPhone" name="customerPhone"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="customerGSTNumber" class="col-sm-3 col-form-label">Customer GST Number</label>
+                        <div class="col-sm-9">
+                            <input required type="text" class="form-control" id="customerGSTNumber" name="customerGSTNumber"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="productId" class="col-sm-3 col-form-label">Select Product</label>
+                        <div class="col-sm-9">
+                            <select required class="form-control" id="productId" name="productId">
+                                {{#each products}}
+                                    <option value="{{this._id}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
+                        <div class="col-sm-9">
+                            <input required type="text" class="form-control" id="quantity" name="quantity"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="gstPercentage" class="col-sm-3 col-form-label">GST Percentage</label>
+                        <div class="col-sm-9">
+                            <input required type="text" class="form-control" id="gstPercentage" name="gstPercentage"> 
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

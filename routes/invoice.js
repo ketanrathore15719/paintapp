@@ -100,9 +100,13 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/product');
 const Invoice = require('../models/invoice');
+const PreviewInvoice = require('../models/preview');
 const PDFDocument = require('pdfkit');
 const path = require('path');
 const fs = require('fs');
+const querystring = require('querystring');
+const moment = require('moment');
+
 
 // Ensure the invoices directory exists
 const invoicesDir = path.join(__dirname, '../public/invoices');
@@ -111,37 +115,85 @@ if (!fs.existsSync(invoicesDir)) {
 }
 
 // Create invoice
-router.get('/', async (req, res) => {
+router.get('/create', async (req, res) => {
   const products = await Product.find();
-  res.render('invoice', { products });
+  res.render('invoice/create', {
+    layout: 'layouts/default',
+    products: products
+  });
 });
 
+router.get('/preview/:id', async (req, res) => {
+  console.log(req.query, req.params)
+  let invoice = await PreviewInvoice.findById(req.params.id).populate('products.productId').lean();
+  
+  invoice.billingDate = moment(invoice.billingDate || invoice.createdAt).format('DD/MM/YYYY hh:mm:ss a')
+  console.log(invoice)
+  res.render('invoice/preview', {
+    layout: 'layouts/default',
+    invoice: invoice
+  });
+});
+
+
 router.post('/create', async (req, res) => {
-  const { customerName, customerEmail, customerAddress, productId, quantity, gstPercentage } = req.body;
+  const { customerName, customerEmail, customerAddress, customerGSTNumber, customerPhone, productId, quantity, gstPercentage } = req.body;
   const product = await Product.findById(productId);
   const total = product.price * quantity;
   const gst = total * (gstPercentage / 100);
   const totalWithGst = total + gst;
 
-  const newInvoice = new Invoice({
+  let lastInvoiceNumber = 0; // This could be fetched from a database or another persistent storage
+
+  function generateInvoiceNumber() {
+      lastInvoiceNumber++; // Increment the last invoice number
+      return `INV-${lastInvoiceNumber.toString().padStart(5, '0')}`; // Format the invoice number
+  }
+
+  // Example usage
+  let invoiceNumber = generateInvoiceNumber();
+
+  const newInvoice = new PreviewInvoice({
     customerName,
     customerEmail,
     customerAddress,
-    products: [{ productId, quantity, price: product.price }],
+    customerPhone,
+    customerGSTNumber,
+    products: [{ productId, quantity, price: product.price, total: total }],
     gstPercentage,
     total,
-    totalWithGst
+    totalWithGst,
+    gst,
+    invoiceNumber
   });
 
+  // let preview = {
+  //   customerName,
+  //   customerEmail,
+  //   customerAddress,
+  //   products: [{ productId, quantity, price: product.price }],
+  //   gstPercentage,
+  //   total,
+  //   totalWithGst,
+  //   invoiceNumber
+  // }
+
+    // Convert preview object to query string
+    // let queryString = querystring.stringify(preview);
+
+    // res.redirect(`/invoice/preview?${queryString}`);
   await newInvoice.save();
 
-  res.redirect(`/invoice/${newInvoice._id}`);
+  res.redirect(`/invoice/preview/${newInvoice._id}`);
 });
 
 // List invoices
 router.get('/list', async (req, res) => {
   const invoices = await Invoice.find().populate('products.productId');
-  res.render('invoices', { invoices });
+  res.render('invoice/list', {
+    layout: 'layouts/default',
+    invoices: invoices
+  });
 });
 
 // View invoice

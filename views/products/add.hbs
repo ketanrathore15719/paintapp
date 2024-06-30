@@ -1,0 +1,42 @@
+<div class="main-panel">        
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Add Product</h4>
+                  <form class="add-product-form" action="/products/add" method="POST" >
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-3 col-form-label">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="name" placeholder="Name" name="name"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="category" class="col-sm-3 col-form-label">Category</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="category" placeholder="category" name="category"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="quantity" class="col-sm-3 col-form-label">Quantity</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="quantity" placeholder="quantity" name="quantity"> 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="price" class="col-sm-3 col-form-label">Price</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="price" placeholder="price" name="price"> 
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
